@@ -1,32 +1,37 @@
-const { FusesPlugin } = require('@electron-forge/plugin-fuses');
-const { FuseV1Options, FuseVersion } = require('@electron/fuses');
+const { FusesPlugin } = require("@electron-forge/plugin-fuses");
+const { FuseV1Options, FuseVersion } = require("@electron/fuses");
 
 module.exports = {
   packagerConfig: {
     asar: true,
-    executableName: 'my-notes',
-      icon: './assets/icon'
-
-
+    executableName: "my-notes",
+    icon: "./assets/icon",
   },
 
   rebuildConfig: {},
 
   makers: [
     {
-      name: '@electron-forge/maker-deb',
+      name: "@electron-forge/maker-squirrel",
+      config: {},
+    },
+    {
+      name: "@electron-forge/maker-deb",
       config: {
         options: {
-          icon: './assets/icon.png'
-        }
+          icon: "./assets/icon.png",
+        },
       },
     },
-    // RPM maker hata diya hai
+    {
+      name: "@electron-forge/maker-zip",
+      platforms: ["darwin"],
+    },
   ],
 
   plugins: [
     {
-      name: '@electron-forge/plugin-auto-unpack-natives',
+      name: "@electron-forge/plugin-auto-unpack-natives",
       config: {},
     },
 
@@ -44,11 +49,9 @@ module.exports = {
   ],
 };
 
-
-
 // npm install --save-dev @electron-forge/cli
 
 // npx electron-forge import
 
 // npm run make
-//to finally create setup file 
+//to finally create setup file
